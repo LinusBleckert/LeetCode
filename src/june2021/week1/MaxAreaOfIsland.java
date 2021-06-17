@@ -18,39 +18,64 @@ public class MaxAreaOfIsland {
 
     // m x n grid, island is 1, water is 0
 
-    public int maxAreaOfIsland(int[][] grid) {
+    public static int maxAreaOfIsland(int[][] grid) {
 
-        for(int x = 0; x < grid.length; x++){
-            for(int y = 0; y < grid[x].length; y++){
-                if(grid[y][x] == 1){
-                    System.out.println("X is: " + x + " and Y is: " + y);
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+
+        int highest = 0;
+        for(int y = 0; y < grid.length; y++){
+            for(int x = 0; x < grid[y].length; x++){
+                if(grid[y][x] == 1 && !visited[y][x]){
+                    int current = islandSize(visited, grid, y, x, 0);
+                    if(current > highest)
+                        highest = current;
                 }
-
             }
         }
-
-
+        return highest;
     }
 
 
-    public int islandSize(int[][] grid, int x, int y){
 
-        if(grid[y][x] == 0){
+    public static int islandSize(boolean[][] visited, int[][] grid, int y, int x, int n){
+        if(!insideGrid(grid.length, grid[0].length, y, x))
             return 0;
-        }else{
-
-            if(insideGrid(grid.length, grid[0].length, x, y)){
-
-
-            }
+        if(visited[y][x] || grid[y][x] == 0)
+            return 0;
+        else{
+            n++;
         }
+        visited[y][x] = true;
+
+        // The problem is n+=, i count it twice
+        //Go up first
+
+        // brain died, added temp and temp > n and it worked
+        int  temp = islandSize(visited, grid, y-1, x, n);
+        if(temp > n)
+            n = temp;
+
+        // right
+        temp = islandSize(visited, grid, y, x+1, n);
+        if(temp > n)
+            n = temp;
+
+        // down
+        temp = islandSize(visited, grid, y+1, x, n);
+        if(temp > n)
+            n = temp;
+        // left
+        temp = islandSize(visited, grid, y, x-1, n);
+        if(temp > n)
+            n = temp;
+
+        return n;
     }
 
-    public boolean insideGrid(int m, int n, int x, int y){
-
-        if(x < 0 || x > m)
+    public static boolean insideGrid(int m, int n, int y, int x){
+        if(x < 0 || x >= n)
             return false;
-        if(y < 0 || y > n)
+        if(y < 0 || y >= m)
             return false;
         return true;
     }
@@ -58,6 +83,7 @@ public class MaxAreaOfIsland {
     public static void main(String[] args) {
         int[][] grid =  {{0,0,1,0,0,0,0,1,0,0,0,0,0},{0,0,0,0,0,0,0,1,1,1,0,0,0},{0,1,1,0,1,0,0,0,0,0,0,0,0},{0,1,0,0,1,1,0,0,1,0,1,0,0},{0,1,0,0,1,1,0,0,1,1,1,0,0},{0,0,0,0,0,0,0,0,0,0,1,0,0},{0,0,0,0,0,0,0,1,1,1,0,0,0},{0,0,0,0,0,0,0,1,1,0,0,0,0}};
 
-        maxAreaOfIsland(grid);
+        int result = maxAreaOfIsland(grid);
+        System.out.println(result);
     }
 }
