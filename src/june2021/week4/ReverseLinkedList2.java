@@ -3,6 +3,7 @@ package june2021.week4;
 public class ReverseLinkedList2 {
 
     public class ListNode{
+
         int val;
         ListNode next;
         public ListNode(){
@@ -37,13 +38,27 @@ public class ReverseLinkedList2 {
         // Saved before and after node now
 
 
+        recursiveReverse(beforeIndex.next);
+        beforeIndex.next = beforeIndex;
 
 
 
     }
 
     // normal reverse linked list do this first!!
-    public void recursiveReverse(){
+    public void recursiveReverse(ListNode current){
 
+        if(current.next == null)
+            return;
+        else{
+            recursiveReverse(current.next);
+            current.next.next = current;
+            current.next = null;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        ListNode head = new ListNode(1);
     }
 }
