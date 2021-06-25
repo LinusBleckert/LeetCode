@@ -3,7 +3,6 @@ package june2021.week4;
 public class ReverseLinkedList2 {
 
 
-
     public static ListNode reverseBetween(ListNode head, int left, int right) {
         if(left == right)
             return head;
