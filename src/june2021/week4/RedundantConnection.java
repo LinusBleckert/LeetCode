@@ -29,6 +29,8 @@ public class RedundantConnection {
 
 
         }
+        int[] temp = {0,0};
+        return temp;
     }
 
 
