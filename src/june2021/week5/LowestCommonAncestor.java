@@ -33,6 +33,7 @@ public class LowestCommonAncestor {
         if((left == p && right == q) || (right == p && left == q)){
             return root;
         }
+
         if(left == null && right == null)
             return null;
 
