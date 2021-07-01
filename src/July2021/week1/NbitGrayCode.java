@@ -71,7 +71,7 @@ public class NbitGrayCode {
         String aS = Integer.toBinaryString(a);
         String bS = Integer.toBinaryString(b);
 
-        int start = aS.length()==bS.length() ? 0 : 1;
+        int start = Math.abs(aS.length() - bS.length());
         int errors = start;
         int maxLength = Math.min(aS.length(), bS.length());
 
@@ -80,19 +80,18 @@ public class NbitGrayCode {
                 errors++;
         }
 
-
         if(errors > 1){
             return false;
         }else{
             return true;
         }
-
     }
 
     public static void main(String[] args) {
 
-
-        List<Integer> res = grayCode(3);
+        System.out.println(checkIfDiffersByOneBitString(0,8));
+        System.exit(-1);
+        List<Integer> res = grayCode(2);
         res.forEach(System.out::println);
     }
 }
