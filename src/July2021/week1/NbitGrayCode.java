@@ -25,7 +25,7 @@ public class NbitGrayCode {
         if(addedNumber == 0){
             numbersResult.add(0);
         }else{
-            if(checkIfDiffersByOneBit(numbersResult.get(numbersResult.size() - 1), addedNumber)){
+            if(checkIfDiffersByOneBitString(numbersResult.get(numbersResult.size() - 1), addedNumber)){
                 numbersResult.add(addedNumber);
             }else{
                 return numbersResult;
@@ -35,7 +35,7 @@ public class NbitGrayCode {
         // All numbers are put in
         if(numbersResult.size() == Math.pow(2,n)){
             // Check if its correct and return completed list
-            if(checkIfDiffersByOneBit(numbersResult.get(0), numbersResult.get(numbersResult.size() - 1))){
+            if(checkIfDiffersByOneBitString(numbersResult.get(0), numbersResult.get(numbersResult.size() - 1))){
                 return numbersResult;
             }else{// If not remove last index
                 numbersResult.remove(numbersResult.size()-1);
@@ -51,7 +51,8 @@ public class NbitGrayCode {
             }
         }
 
-        numbersResult.remove(addedNumber);
+
+        numbersResult.remove(numbersResult.indexOf(addedNumber));
         return numbersResult;
     }
 
@@ -59,16 +60,39 @@ public class NbitGrayCode {
 
         int n = Math.max(a, b);
         for(int i = 0; i < n; i++){
-
             if(Math.abs(a-b) == Math.pow(2,i))
                 return true;
         }
         return false;
     }
 
+    public static boolean checkIfDiffersByOneBitString(int a, int b){
+
+        String aS = Integer.toBinaryString(a);
+        String bS = Integer.toBinaryString(b);
+
+        int start = aS.length()==bS.length() ? 0 : 1;
+        int errors = start;
+        int maxLength = Math.min(aS.length(), bS.length());
+
+        for(int i = start; i < maxLength; i++){
+            if(aS.charAt(i) != bS.charAt(i))
+                errors++;
+        }
+
+
+        if(errors > 1){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
     public static void main(String[] args) {
 
-        List<Integer> res = grayCode(2);
+
+        List<Integer> res = grayCode(3);
         res.forEach(System.out::println);
     }
 }
