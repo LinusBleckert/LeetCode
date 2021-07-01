@@ -71,11 +71,21 @@ public class NbitGrayCode {
         String aS = Integer.toBinaryString(a);
         String bS = Integer.toBinaryString(b);
 
-        int start = Math.abs(aS.length() - bS.length());
-        int errors = start;
-        int maxLength = Math.min(aS.length(), bS.length());
+        int diff = Math.abs(aS.length() - bS.length());
 
-        for(int i = start; i < maxLength; i++){
+        String filler = "";
+        for(int j = 0; j < diff; j++){
+            filler += "0";
+        }
+        int errors = 0;
+
+        if(aS.length() > bS.length()){
+            bS = filler + bS;
+        }else{
+            aS = filler + aS;
+        }
+        int maxLength = bS.length();
+        for(int i = 0; i < maxLength; i++){
             if(aS.charAt(i) != bS.charAt(i))
                 errors++;
         }
@@ -89,7 +99,7 @@ public class NbitGrayCode {
 
     public static void main(String[] args) {
 
-        System.out.println(checkIfDiffersByOneBitString(0,8));
+        System.out.println(checkIfDiffersByOneBitString(0,7));
         System.exit(-1);
         List<Integer> res = grayCode(2);
         res.forEach(System.out::println);
